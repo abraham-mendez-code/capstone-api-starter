@@ -50,7 +50,20 @@ public class ShoppingCartController
 
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
-
+    @PostMapping("products/{productId}")
+    public void addToCart(@PathVariable int productId, Principal principal)
+    {
+        try
+        {
+            int userId = getUserId(principal);
+            shoppingCartDao.addItem(userId, productId);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
