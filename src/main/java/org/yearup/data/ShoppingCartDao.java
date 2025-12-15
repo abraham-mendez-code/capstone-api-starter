@@ -10,5 +10,5 @@ public interface    ShoppingCartDao
 
     void updateItem(int userId, int productId, int quantity);
 
-    //void clearCart(int userId);
+    void clearCart(int userId);
 }

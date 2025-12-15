@@ -89,9 +89,9 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         String sql = """
                 UPDATE
                 	shopping_cart
-                SET 
+                SET
                     quantity = ?
-                WHERE 
+                WHERE
                     user_id = ?
                     AND product_id = ?;
                 """;
@@ -108,6 +108,29 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             statement.executeUpdate();
         }
         catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void clearCart(int userId) {
+        String sql = """
+                DELETE FROM
+                    shopping_cart
+                WHERE
+                    user_id = ?;
+                """;
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+        )
+        {
+            statement.setInt(1, userId);
+
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
