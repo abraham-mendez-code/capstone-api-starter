@@ -156,7 +156,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     }
 
     @Override
-    public void update(int productId, Product product)
+    public Product update(int productId, Product product)
     {
         String sql = "UPDATE products" +
                 " SET name = ? " +
@@ -188,6 +188,9 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         {
             throw new RuntimeException(e);
         }
+
+        // Check if this call is fine or if returning product is better
+        return getById(productId);
     }
 
     @Override
