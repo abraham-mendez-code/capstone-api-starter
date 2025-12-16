@@ -3,10 +3,7 @@ package org.yearup.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProfileDao;
 import org.yearup.data.UserDao;
@@ -26,13 +23,15 @@ public class ProfileController {
     private final UserDao userDao;
 
     @Autowired
-    public ProfileController(ProfileDao profileDao, UserDao userDao) {
+    public ProfileController(ProfileDao profileDao, UserDao userDao)
+    {
         this.profileDao = profileDao;
         this.userDao = userDao;
     }
 
     @GetMapping("")
-    public Profile getByUserId(Principal principal) {
+    public Profile getByUserId(Principal principal)
+    {
 
         try
         {
@@ -46,7 +45,24 @@ public class ProfileController {
         }
     }
 
-    protected int getUserId(Principal principal) throws Exception {
+    @PutMapping("")
+    public Profile update(@RequestBody Profile profile, Principal principal)
+    {
+        try
+        {
+            int userId = getUserId(principal);
+
+            return profileDao.update(userId, profile);
+        }
+        catch (Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+
+    }
+
+    protected int getUserId(Principal principal) throws Exception
+    {
         // get the currently logged-in username
         String userName = principal.getName();
         // find database user by userId

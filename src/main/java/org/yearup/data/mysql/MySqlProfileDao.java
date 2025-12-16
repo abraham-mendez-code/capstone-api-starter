@@ -45,7 +45,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     }
 
     @Override
-    public Profile getByUserId(int userId) {
+    public Profile getByUserId(int userId)
+    {
 
         String sql = """
                 SELECT
@@ -79,20 +80,21 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     }
 
     @Override
-    public Profile update(Profile profile) {
+    public Profile update(int userId, Profile profile)
+    {
 
         String sql = """
                 UPDATE
                     profiles
                 SET
-                    first_name = COALESCE(?, first_name),
-                    last_name = COALESCE(?, last_name),
-                    phone = COALESCE(?, phone),
-                    email = COALESCE(?, email),
-                    address = COALESCE(?, address),
-                    city = COALESCE(?, city),
-                    state = COALESCE(?, state),
-                    zip = COALESCE(?, zip)
+                    first_name = COALESCE(NULLIF(?, '' ), first_name),
+                    last_name = COALESCE(NULLIF(?, '' ), last_name),
+                    phone = COALESCE(NULLIF(?, '' ), phone),
+                    email = COALESCE(NULLIF(?, '' ), email),
+                    address = COALESCE(NULLIF(?, '' ), address),
+                    city = COALESCE(NULLIF(?, '' ), city),
+                    state = COALESCE(NULLIF(?, '' ), state),
+                    zip = COALESCE(NULLIF(?, '' ), zip)
                 WHERE
                     user_id = ?;
                 """;
@@ -110,11 +112,11 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             statement.setString(6, profile.getCity());
             statement.setString(7, profile.getState());
             statement.setString(8, profile.getZip());
-            statement.setInt(9, profile.getUserId());
+            statement.setInt(9, userId);
 
             statement.executeUpdate();
 
-            return getByUserId(profile.getUserId());
+            return getByUserId(userId);
         }
         catch (SQLException e)
         {
@@ -122,7 +124,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         }
     }
 
-    protected static Profile mapRow(ResultSet results) throws SQLException {
+    protected static Profile mapRow(ResultSet results) throws SQLException
+    {
 
         int userId = results.getInt("user_id");
         String firstName = results.getString("first_name");
