@@ -65,13 +65,17 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
             try (ResultSet results = statement.executeQuery())
             {
-                return mapRow(results);
+                if (results.next())
+                {
+                    return mapRow(results);
+                }
             }
         }
         catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     @Override
