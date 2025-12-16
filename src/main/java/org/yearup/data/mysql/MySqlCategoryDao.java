@@ -137,9 +137,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         // Create SQL query String
         String sql = "UPDATE categories " +
-                "SET name = COALESCE(?, name) " +
+                "SET " +
+                "   name = COALESCE(?, name) " +
                 "   ,description =  COALESCE(?, description) " +
-                "WHERE category_id = ?";
+                "WHERE " +
+                "   category_id = ?";
 
         // Get a connection
         try(Connection connection = getConnection())

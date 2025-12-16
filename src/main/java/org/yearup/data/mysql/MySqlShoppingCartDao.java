@@ -21,7 +21,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public ShoppingCart getByUserId(int userId) {
+    public ShoppingCart getByUserId(int userId)
+    {
 
         ShoppingCart cart = new ShoppingCart();
 
@@ -58,7 +59,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public void addItem(int userId, int productId) {
+    public void addItem(int userId, int productId)
+    {
 
         String sql = """
                 INSERT INTO
@@ -85,7 +87,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public void updateItem(int userId, int productId, int quantity) {
+    public void updateItem(int userId, int productId, int quantity)
+    {
         String sql = """
                 UPDATE
                 	shopping_cart
@@ -114,7 +117,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public void clearCart(int userId) {
+    public void clearCart(int userId)
+    {
         String sql = """
                 DELETE FROM
                     shopping_cart
