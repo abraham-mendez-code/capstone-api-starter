@@ -1,45 +1,106 @@
 package org.yearup.models;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Order
 {
+    // CLASS ATTRIBUTES
+    private int orderId;
+    private int userId;
+    private LocalDateTime date;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private final double shippingFee = 10.99;
 
-    private Map<Integer, OrderLineItem> items = new HashMap<>();
-
-    public Map<Integer, OrderLineItem> getItems()
+    // CONSTRUCTORS
+    public Order()
     {
-        return items;
     }
 
-    public void setItems(Map<Integer, OrderLineItem> items)
+    public Order(int orderId, int userId, LocalDateTime date, String address, String city, String state, String zip)
     {
-        this.items = items;
+        this.orderId = orderId;
+        this.userId = userId;
+        this.date = date;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
     }
 
-    public boolean contains(int productId)
+    // GETTER AND SETTER METHODS
+    public int getOrderId()
     {
-        return items.containsKey(productId);
+        return orderId;
     }
 
-    public void add(OrderLineItem item)
+    public void setOrderId(int orderId)
     {
-        items.put(item.getProductId(), item);
+        this.orderId = orderId;
     }
 
-    public OrderLineItem get(int productId)
+    public int getUserId()
     {
-        return items.get(productId);
+        return userId;
     }
 
-    public BigDecimal getTotal()
+    public void setUserId(int userId)
     {
+        this.userId = userId;
+    }
 
-        return items.values()
-                .stream()
-                .map(OrderLineItem::getLineTotal)
-                .reduce( BigDecimal.ZERO, (lineTotal, subTotal) -> subTotal.add(lineTotal));
+    public LocalDateTime getDate()
+    {
+        return date;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public String getZip()
+    {
+        return zip;
+    }
+
+    public void setZip(String zip)
+    {
+        this.zip = zip;
+    }
+
+    public double getShippingFee()
+    {
+        return shippingFee;
     }
 }

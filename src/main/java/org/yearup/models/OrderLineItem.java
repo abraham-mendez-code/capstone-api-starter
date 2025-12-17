@@ -47,7 +47,7 @@ public class OrderLineItem
         return this.product.getProductId();
     }
 
-    public BigDecimal getLineTotal()
+    public BigDecimal getSalesPrice()
     {
         BigDecimal basePrice = product.getPrice();
         BigDecimal quantity = new BigDecimal(this.quantity);
